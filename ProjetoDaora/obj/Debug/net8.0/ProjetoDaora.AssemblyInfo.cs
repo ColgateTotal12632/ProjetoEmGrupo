@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetoDaora")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0168d1c317cc6d6ca0ad9f4bb60d8b07e62045cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetoDaora")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetoDaora")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,56 @@
+﻿@model ProjetoDaora.Models.Venda
+
+@{
+    ViewData["Title"] = "Editar Venda";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header text-white d-flex align-items-center justify-content-between" style="background-color: #f0d165;">
+            <h3 class="mb-0 text-dark fw-bold">Editar Venda</h3>
+            <span class="badge bg-dark text-white px-3 py-2">ID: @Model.VendaId</span>
+        </div>
+
+        <div class="card-body">
+            <h5 class="text-muted mb-4">Atualize as informações da venda abaixo:</h5>
+
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="VendaId" />
+
+                <div class="mb-3">
+                    <label asp-for="VendedorId" class="form-label fw-semibold">Vendedor</label>
+                    <select asp-for="VendedorId" class="form-control rounded-3 shadow-sm" asp-items="ViewBag.VendedorId"></select>
+                    <span asp-validation-for="VendedorId" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DataVenda" class="form-label fw-semibold">Data da Venda</label>
+                        <input asp-for="DataVenda" type="date" class="form-control rounded-3 shadow-sm" />
+                        <span asp-validation-for="DataVenda" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ValorTotal" class="form-label fw-semibold">Valor Total</label>
+                        <input asp-for="ValorTotal" class="form-control rounded-3 shadow-sm" placeholder="Ex: 149.90" />
+                        <span asp-validation-for="ValorTotal" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        ← Voltar para a lista
+                    </a>
+                    <input type="submit" value="Salvar Alterações" class="btn text-dark fw-bold px-4" style="background-color: #f0d165;" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

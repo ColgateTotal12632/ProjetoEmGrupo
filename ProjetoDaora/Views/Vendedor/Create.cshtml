@@ -1,0 +1,60 @@
+﻿@model ProjetoDaora.Models.Vendedor
+
+@{
+    ViewData["Title"] = "Criar Vendedor";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header text-white" style="background-color: #f0d165;">
+            <h3 class="mb-0 text-dark fw-bold">Criar Vendedor</h3>
+        </div>
+
+        <div class="card-body">
+            <h5 class="text-muted mb-4">Preencha os dados do vendedor abaixo:</h5>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label fw-semibold">Nome</label>
+                    <input asp-for="Nome" class="form-control rounded-3 shadow-sm" placeholder="Digite o nome completo" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Cpf" class="form-label fw-semibold">CPF</label>
+                        <input asp-for="Cpf" class="form-control rounded-3 shadow-sm" placeholder="Ex: 123.456.789-00" />
+                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+                        <input asp-for="Telefone" class="form-control rounded-3 shadow-sm" placeholder="Ex: (11) 91234-5678" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DataCadastro" class="form-label fw-semibold">Data de Cadastro</label>
+                    <input asp-for="DataCadastro" type="date" class="form-control rounded-3 shadow-sm" />
+                    <span asp-validation-for="DataCadastro" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        ← Voltar para a lista
+                    </a>
+                    <input type="submit" value="Criar Vendedor" class="btn text-dark fw-bold px-4" style="background-color: #f0d165;" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

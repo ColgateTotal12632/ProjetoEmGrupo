@@ -1,0 +1,48 @@
+﻿@model ProjetoDaora.Models.Produto
+
+@{
+    ViewData["Title"] = "Apagar Produto";
+}
+
+<div class="container mt-5">
+    <div class="card bg-white text-dark shadow-lg rounded-4">
+        <div class="card-body p-5 text-center">
+            <h2 class="mb-3 text-danger fw-bold">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> Apagar Produto
+            </h2>
+            <p class="lead mb-4">Tem certeza que deseja excluir este Produto?</p>
+
+            <div class="border-top border-bottom py-3 my-4 text-start">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3 fw-bold">Nome</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
+
+                    <dt class="col-sm-3 fw-bold">Descrição</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Descricao)</dd>
+
+                    <dt class="col-sm-3 fw-bold">Preço</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Preco)</dd>
+
+                    <dt class="col-sm-3 fw-bold">Estoque</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Estoque)</dd>
+
+                    <dt class="col-sm-3 fw-bold">Data do Cadastro</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.DataCadastro)</dd>
+                </dl>
+            </div>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="ProdutoId" />
+
+                <button type="submit" class="btn btn-danger btn-lg px-4 me-3">
+                    Confirmar Exclusão
+                </button>
+
+                <a asp-action="Index" class="btn btn-outline-dark btn-lg px-4">
+                    Voltar para a lista
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div> 
