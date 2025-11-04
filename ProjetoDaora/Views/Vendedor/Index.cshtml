@@ -1,0 +1,154 @@
+﻿@model IEnumerable<ProjetoDaora.Models.Vendedor>
+
+@{
+    ViewData["Title"] = "Vendedores";
+}
+
+<div class="header-section">
+    <h1>Lista de Vendedores</h1>
+    <p>Gerencie seus vendedores aqui.</p>
+</div>
+
+<div class="table-container">
+    <p>
+        <a asp-action="Create" class="btn btn-warning">
+            <i class="fas fa-plus"></i> Criar Novo Vendedor
+        </a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cpf)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataCadastro)
+                </th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cpf)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataCadastro)
+                    </td>
+                    <td class="action-links">
+                        <a asp-action="Edit" asp-route-id="@item.VendedorId" class="edit-link" title="Editar">
+                            <i class="fas fa-edit"></i> Editar
+                        </a> |
+                        <a asp-action="Delete" asp-route-id="@item.VendedorId" class="delete-link" title="Excluir">
+                            <i class="fas fa-trash"></i> Excluir
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
+    .header-section {
+        background-color: #f0d165;
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .table-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: white;
+        border: none;
+    }
+
+    .table td {
+        border: none;
+        vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+
+    .action-links a {
+        margin-right: 10px;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .action-links .details-link {
+        color: #f0d165;
+        font-weight: bold;
+    }
+
+        .action-links .details-link:hover {
+            background-color: #e6c055;
+            color: white;
+        }
+
+    .action-links .edit-link {
+        color: #007bff;
+    }
+
+        .action-links .edit-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+    .action-links .delete-link {
+        color: #dc3545;
+    }
+
+        .action-links .delete-link:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+</style>

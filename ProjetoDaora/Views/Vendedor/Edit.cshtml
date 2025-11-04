@@ -1,0 +1,62 @@
+﻿@model ProjetoDaora.Models.Vendedor
+
+@{
+    ViewData["Title"] = "Editar Vendedor";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header text-white d-flex align-items-center justify-content-between" style="background-color: #f0d165;">
+            <h3 class="mb-0 text-dark fw-bold">Editar Vendedor</h3>
+            <span class="badge bg-dark text-white px-3 py-2">ID: @Model.VendedorId</span>
+        </div>
+
+        <div class="card-body">
+            <h5 class="text-muted mb-4">Atualize as informações do vendedor abaixo:</h5>
+
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="VendedorId" />
+
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label fw-semibold">Nome</label>
+                    <input asp-for="Nome" class="form-control rounded-3 shadow-sm" placeholder="Digite o nome completo do vendedor" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Cpf" class="form-label fw-semibold">CPF</label>
+                        <input asp-for="Cpf" class="form-control rounded-3 shadow-sm" placeholder="Ex: 000.000.000-00" />
+                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Telefone" class="form-label fw-semibold">Telefone</label>
+                        <input asp-for="Telefone" class="form-control rounded-3 shadow-sm" placeholder="Ex: (11) 99999-9999" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DataCadastro" class="form-label fw-semibold">Data de Cadastro</label>
+                    <input asp-for="DataCadastro" type="date" class="form-control rounded-3 shadow-sm" />
+                    <span asp-validation-for="DataCadastro" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        ← Voltar para a lista
+                    </a>
+                    <input type="submit" value="Salvar Alterações" class="btn text-dark fw-bold px-4" style="background-color: #f0d165;" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,8 +1,88 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ProjetoDaora.Models.ResumoVendasDia
+
+@{
+    ViewData["Title"] = "Início";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid">
+    <div class="row align-items-stretch" style="min-height: 80vh; position: relative;">
+
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+            <h1 class="fw-bold mb-3 text-center">
+                <span class="highlight">Gerencie</span><br />
+                <span class="highlight">suas vendas</span><br />
+                <span class="highlight">em segundos</span><br />
+                <span class="highlight">utilizando</span><br />
+                <span style="color: #f0d165;" class="highlight2">Vendita</span>
+            </h1>
+        </div>
+
+        <div class="resumo-vendas p-4 text-center"
+             style="background-color: #f0d165; border-radius: 8px; opacity: 0.95;">
+            <h3 class="fw-semibold mb-3" style="color: #0F3B33;">
+                Resumo de Vendas - @Model.Data.ToShortDateString()
+            </h3>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <div class="card" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                        <div class="card-body">
+                            <h6 class="card-title" style="color: #0F3B33;">Total de Vendas</h6>
+                            <p class="card-text fw-bold">@Model.TotalVendas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-2">
+                    <div class="card" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                        <div class="card-body">
+                            <h6 class="card-title" style="color: #0F3B33;">Valor Total</h6>
+                            <p class="card-text fw-bold">R$ @Model.ValorTotalVendas.ToString("F2")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-2">
+                    <div class="card" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                        <div class="card-body">
+                            <h6 class="card-title" style="color: #0F3B33;">Itens Vendidos</h6>
+                            <p class="card-text fw-bold">@Model.TotalItensVendidos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<style>
+    html {
+        font-size: 14px;
+    }
+
+    body {
+        margin-bottom: 60px;
+        background-image: url('../img/womanlevingofthecell.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: contain;
+    }
+
+    .highlight {
+        font-size: 3.5rem;
+        font-weight: 600;
+    }
+
+    .highlight2 {
+        font-size: 4rem;
+        font-weight: 700;
+    }
+
+    /* Painel fixo à direita */
+    .resumo-vendas {
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 350px;
+    }
+</style>

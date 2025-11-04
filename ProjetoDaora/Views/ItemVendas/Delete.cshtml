@@ -1,0 +1,47 @@
+﻿@model ProjetoDaora.Models.ItemVenda
+
+@{
+    ViewData["Title"] = "Apagar Item de Venda";
+}
+
+<div class="container mt-5">
+    <div class="card bg-white text-dark shadow-lg rounded-4">
+        <div class="card-body p-5 text-center">
+            <h2 class="mb-3 text-danger fw-bold">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> Apagar Item de Venda
+            </h2>
+            <p class="lead mb-4">Você tem certeza que deseja apagar este item de venda?</p>
+
+            <div class="border-top border-bottom py-3 my-4 text-start">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Venda)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Venda.VendaId)</dd>
+
+                    <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Produto)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Produto.Nome)</dd>
+
+                    <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.Quantidade)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.Quantidade)</dd>
+
+                    <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.PrecoUnitario)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.PrecoUnitario)</dd>
+
+                    <dt class="col-sm-3 fw-bold">@Html.DisplayNameFor(model => model.TotalItem)</dt>
+                    <dd class="col-sm-9">@Html.DisplayFor(model => model.TotalItem)</dd>
+                </dl>
+            </div>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="ItemId" />
+
+                <button type="submit" class="btn btn-danger btn-lg px-4 me-3">
+                    Confirmar Exclusão
+                </button>
+
+                <a asp-action="Index" class="btn btn-outline-dark btn-lg px-4">
+                    Voltar para a lista
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
