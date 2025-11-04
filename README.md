@@ -1,4 +1,4 @@
-<img width="1420" height="168" alt="image" src="https://github.com/user-attachments/assets/3f44ef47-5f05-4ad4-add6-b6def59a25ae" /><img width="1420" height="168" alt="image" src="https://github.com/user-attachments/assets/3eb2f56a-7fd1-43d4-ac65-94f3dee90659" /># ProjetoDaora 🎯
+# ProjetoDaora 🎯
 
 ## 🧩 Descrição
 
@@ -32,19 +32,19 @@ O objetivo do projeto é servir como base para sistemas web com autenticação, 
 
 ## 🗂️ Estrutura do Projeto
 ProjetoDaora/
-•│
-•├── ProjetoDaora.sln
-•├── ProjetoDaora/
-•│ ├── Program.cs
-•│ ├── appsettings.json
-•│ ├── appsettings.Development.json
-•│ ├── Areas/
-•│ │ └── Identity/
-•│ │ └── Pages/...
-•│ ├── Models/
-•│ ├── Controllers/
-•│ ├── Views/
-•│ └── wwwroot/
+│
+├── ProjetoDaora.sln
+├── ProjetoDaora/
+│ ├── Program.cs
+│ ├── appsettings.json
+│ ├── appsettings.Development.json
+│ ├── Areas/
+│ │ └── Identity/
+│ │ └── Pages/...
+│ ├── Models/
+│ ├── Controllers/
+│ ├── Views/
+│ └── wwwroot/
 
 - **Models/** → Contém as classes de domínio e entidades do banco.  
 - **Views/** → Define a camada de apresentação, com páginas Razor (`.cshtml`).  
@@ -70,20 +70,20 @@ ProjetoDaora/
    cd ProjetoDaora/ProjetoDaora
 
 2. **Restaurar dependências**
-   • dotnet restore
+   dotnet restore
 
 3. **Configurar o banco de dados**
-• Edite o arquivo appsettings.json e configure a string de conexão:
+Edite o arquivo appsettings.json e configure a string de conexão:
 
 "ConnectionStrings": {
   "DefaultConnection": "Server=SEU_SERVIDOR;Database=ProjetoDaoraDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
 
 4. **Aplicar as migrations e criar o banco**
-   • dotnet ef database update
+   dotnet ef database update
 
 5. **Executar o projeto**
-   • dotnet run
+   dotnet run
 
 O sistema estará disponível em:
 👉 http://localhost:5000
