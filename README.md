@@ -1,8 +1,8 @@
-# ProjetoDaora 🎯
+# Vendita 🎯
 
 ## 🧩 Descrição
 
-O **ProjetoDaora** é uma aplicação web desenvolvida em **ASP.NET Core MVC**, estruturada com o padrão **Model-View-Controller (MVC)** e integrada ao **Identity** para autenticação e gerenciamento de usuários.  
+O **Vendita** é uma aplicação web desenvolvida em **ASP.NET Core MVC**, estruturada com o padrão **Model-View-Controller (MVC)** e integrada ao **Identity** para autenticação e gerenciamento de usuários.  
 O objetivo do projeto é servir como base para sistemas web com autenticação, autorização e gerenciamento de dados, proporcionando um exemplo prático de arquitetura MVC moderna no .NET.
 
 ---
