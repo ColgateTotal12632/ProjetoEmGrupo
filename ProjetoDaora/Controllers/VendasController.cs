@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -30,17 +29,16 @@ namespace ProjetoDaora.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venda = await _context.Vendas
                 .Include(v => v.Vendedor)
+                .Include(v => v.Itens)
+                .ThenInclude(i => i.Produto)
                 .FirstOrDefaultAsync(m => m.VendaId == id);
+
             if (venda == null)
-            {
                 return NotFound();
-            }
 
             return View(venda);
         }
@@ -48,95 +46,115 @@ namespace ProjetoDaora.Controllers
         // GET: Vendas/Create
         public IActionResult Create()
         {
-            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Cpf");
+            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Nome");
+            ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "Nome");
             return View();
         }
 
         // POST: Vendas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VendaId,VendedorId,DataVenda,ValorTotal")] Venda venda)
+        public async Task<IActionResult> Create(Venda venda)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(venda);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Nome");
+                ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "Nome");
+                return View(venda);
             }
-            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Cpf", venda.VendedorId);
-            return View(venda);
+
+            // Calcula o valor total baseado nos itens
+            venda.ValorTotal = venda.Itens.Sum(i => i.Quantidade * i.PrecoUnitario);
+
+            _context.Vendas.Add(venda);
+            await _context.SaveChangesAsync();
+
+            // Atualiza o estoque após salvar a venda e itens
+            foreach (var item in venda.Itens)
+            {
+                var produto = await _context.Produtos.FindAsync(item.ProdutoId);
+
+                if (produto == null)
+                    continue;
+
+                if (produto.Estoque < item.Quantidade)
+                {
+                    ModelState.AddModelError("", $"Estoque insuficiente para o produto {produto.Nome}.");
+
+                    // desfaz a venda
+                    _context.Vendas.Remove(venda);
+                    await _context.SaveChangesAsync();
+
+                    ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Nome");
+                    ViewData["ProdutoId"] = new SelectList(_context.Produtos, "ProdutoId", "Nome");
+                    return View(venda);
+                }
+
+                produto.Estoque -= item.Quantidade;
+                _context.Produtos.Update(produto);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Vendas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venda = await _context.Vendas.FindAsync(id);
             if (venda == null)
-            {
                 return NotFound();
-            }
-            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Cpf", venda.VendedorId);
+
+            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Nome", venda.VendedorId);
             return View(venda);
         }
 
         // POST: Vendas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VendaId,VendedorId,DataVenda,ValorTotal")] Venda venda)
+        public async Task<IActionResult> Edit(int id, Venda venda)
         {
             if (id != venda.VendaId)
-            {
                 return NotFound();
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Nome", venda.VendedorId);
+                return View(venda);
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(venda);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VendaExists(venda.VendaId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(venda);
+                await _context.SaveChangesAsync();
             }
-            ViewData["VendedorId"] = new SelectList(_context.Vendedores, "VendedorId", "Cpf", venda.VendedorId);
-            return View(venda);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Vendas.Any(e => e.VendaId == venda.VendaId))
+                    return NotFound();
+
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Vendas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var venda = await _context.Vendas
                 .Include(v => v.Vendedor)
                 .FirstOrDefaultAsync(m => m.VendaId == id);
+
             if (venda == null)
-            {
                 return NotFound();
-            }
 
             return View(venda);
         }
@@ -147,18 +165,12 @@ namespace ProjetoDaora.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var venda = await _context.Vendas.FindAsync(id);
+
             if (venda != null)
-            {
                 _context.Vendas.Remove(venda);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool VendaExists(int id)
-        {
-            return _context.Vendas.Any(e => e.VendaId == id);
         }
     }
 }
