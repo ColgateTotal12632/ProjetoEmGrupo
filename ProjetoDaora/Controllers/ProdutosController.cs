@@ -29,16 +29,13 @@ namespace ProjetoDaora.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var produto = await _context.Produtos
                 .FirstOrDefaultAsync(m => m.ProdutoId == id);
+
             if (produto == null)
-            {
                 return NotFound();
-            }
 
             return View(produto);
         }
@@ -50,8 +47,6 @@ namespace ProjetoDaora.Controllers
         }
 
         // POST: Produtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProdutoId,Nome,Descricao,Preco,Estoque,DataCadastro")] Produto produto)
@@ -69,29 +64,22 @@ namespace ProjetoDaora.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var produto = await _context.Produtos.FindAsync(id);
             if (produto == null)
-            {
                 return NotFound();
-            }
+
             return View(produto);
         }
 
         // POST: Produtos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProdutoId,Nome,Descricao,Preco,Estoque,DataCadastro")] Produto produto)
         {
             if (id != produto.ProdutoId)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -103,13 +91,9 @@ namespace ProjetoDaora.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProdutoExists(produto.ProdutoId))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -120,16 +104,13 @@ namespace ProjetoDaora.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var produto = await _context.Produtos
                 .FirstOrDefaultAsync(m => m.ProdutoId == id);
+
             if (produto == null)
-            {
                 return NotFound();
-            }
 
             return View(produto);
         }
@@ -141,9 +122,7 @@ namespace ProjetoDaora.Controllers
         {
             var produto = await _context.Produtos.FindAsync(id);
             if (produto != null)
-            {
                 _context.Produtos.Remove(produto);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -152,6 +131,37 @@ namespace ProjetoDaora.Controllers
         private bool ProdutoExists(int id)
         {
             return _context.Produtos.Any(e => e.ProdutoId == id);
+        }
+
+        // ======================================
+        // 🔥 NOVOS ENDPOINTS PARA A VENDA
+        // ======================================
+
+        // GET: Produtos/GetProdutos → retorna lista para dropdown
+        [HttpGet]
+        public IActionResult GetProdutos()
+        {
+            var produtos = _context.Produtos
+                .Select(p => new
+                {
+                    id = p.ProdutoId,
+                    nome = p.Nome,
+                    preco = p.Preco
+                }).ToList();
+
+            return Json(produtos);
+        }
+
+        // GET: Produtos/GetPrecoProduto/5 → retorna preço do produto
+        [HttpGet]
+        public IActionResult GetPrecoProduto(int id)
+        {
+            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+
+            if (produto == null)
+                return NotFound();
+
+            return Json(new { preco = produto.Preco });
         }
     }
 }
